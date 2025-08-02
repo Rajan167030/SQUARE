@@ -154,3 +154,81 @@
     transform: rotateX(35deg) translateY(-100%);
   }
 }
+
+/* Custom CSS rules for flipping social links */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Keyframes for the subtle 3D background effect in footer */
+@keyframes float-1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(20px, 30px) scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+@keyframes float-2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(-25px, -15px) scale(1.05);
+    opacity: 0.65;
+  }
+}
+
+@keyframes float-3 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(15px, -20px) scale(1.15);
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulse-light {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Apply animations */
+.animate-float-1 {
+  animation: float-1 15s ease-in-out infinite;
+}
+.animate-float-2 {
+  animation: float-2 18s ease-in-out infinite;
+}
+.animate-float-3 {
+  animation: float-3 12s ease-in-out infinite;
+}
+.animate-pulse-light {
+  animation: pulse-light 10s ease-in-out infinite;
+}

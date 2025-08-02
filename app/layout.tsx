@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { FloatingNavbar } from "@/components/floating-navbar"
+import Footer from "@/components/footer"
 // Removed: import RippleEffect from "@/components/ui/ripple-effect"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -26,6 +27,7 @@ export default function RootLayout({
           <FloatingNavbar />
           {/* Removed: <RippleEffect /> */}
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

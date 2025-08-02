@@ -62,18 +62,29 @@ export default function ContactForm() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg">
+    <Card className="w-full max-w-md mx-auto shadow-lg bg-neutral-900 border border-white/10">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">Get in Touch</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center text-white">Get in Touch</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-2">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
+            <Label htmlFor="name" className="text-gray-300">
+              Name
+            </Label>
+            <Input
+              id="name"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="bg-neutral-800 border-gray-700 text-white placeholder:text-gray-500"
+            />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-gray-300">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
@@ -81,10 +92,13 @@ export default function ContactForm() {
               value={formData.email}
               onChange={handleChange}
               required
+              className="bg-neutral-800 border-gray-700 text-white placeholder:text-gray-500"
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message" className="text-gray-300">
+              Message
+            </Label>
             <Textarea
               id="message"
               placeholder="Your message..."
@@ -92,9 +106,10 @@ export default function ContactForm() {
               onChange={handleChange}
               rows={5}
               required
+              className="bg-neutral-800 border-gray-700 text-white placeholder:text-gray-500"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
+          <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white" disabled={isSubmitting}>
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
         </form>
