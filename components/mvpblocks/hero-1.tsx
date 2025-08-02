@@ -1,10 +1,11 @@
 import { ArrowRight } from "lucide-react"
-import RippleEffect from "@/components/ui/ripple-effect"
-// FloatingNavbar is now in layout.tsx, so no import here
+import PageRippleEffect from "@/components/page-ripple-effect" // Import PageRippleEffect
 
 export default function Hero1() {
   return (
-    <div className="relative w-full bg-neutral-950">
+    <div id="home" className="relative w-full bg-neutral-950">
+      {" "}
+      {/* Added id="home" */}
       {/* Original background elements reintroduced */}
       <div className="absolute top-0 z-[0] h-full w-full bg-neutral-900/10 bg-[radial-gradient(ellipse_20%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
       <section className="relative z-1 mx-auto max-w-full">
@@ -17,8 +18,8 @@ export default function Hero1() {
           <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent to-90%"></div>
         </div>
 
-        {/* RippleEffect component remains */}
-        <RippleEffect />
+        {/* PageRippleEffect component added here, covering the hero content area */}
+        <PageRippleEffect />
 
         {/* Adjusted padding-top to account for global navbar */}
         <div className="z-10 mx-auto max-w-screen-xl gap-12 px-4 pt-40 pb-28 text-gray-600 md:px-8">

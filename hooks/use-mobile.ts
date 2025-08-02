@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768
@@ -17,3 +19,6 @@ export function useIsMobile() {
 
   return !!isMobile
 }
+
+// This file is intentionally left blank as no specific hooks were defined for this project yet.
+// You can add your custom hooks here as your project grows.

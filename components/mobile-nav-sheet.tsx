@@ -1,8 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button"
+import { Menu } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,90 +13,56 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
 import { useActionState } from "react"
 import { signup } from "@/app/actions/auth"
-import { useState, useEffect } from "react"
-import { useScrollSpy } from "@/hooks/use-scroll-spy" // Import the new hook
-import { MobileNavSheet } from "@/components/mobile-nav-sheet" // Import the mobile nav sheet
+import { useState } from "react"
 
 interface NavLink {
   name: string
   href: string
 }
 
-const navLinks: NavLink[] = [
-  { name: "Home", href: "/#home" },
-  { name: "About", href: "/#about" },
-  { name: "Service", href: "/#service" },
-  { name: "Contact", href: "/#contact" },
-]
+interface MobileNavSheetProps {
+  navLinks: NavLink[]
+  activeSection: string | null
+}
 
-export function FloatingNavbar() {
-  const pathname = usePathname()
+export function MobileNavSheet({ navLinks, activeSection }: MobileNavSheetProps) {
+  const [isOpen, setIsOpen] = useState(false)
   const [signupState, signupAction, isSignupPending] = useActionState(signup, { message: "" })
-  const [isScrolled, setIsScrolled] = useState(false)
-
-  // Extract section IDs from navLinks for scroll spy
-  const sectionIds = navLinks.map((link) => link.href.split("#")[1]).filter(Boolean) as string[]
-  const activeSection = useScrollSpy({ sectionIds, offset: 100 }) // Offset for when section becomes active
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
 
   return (
-    <nav
-      className={cn(
-        "fixed z-50 w-full px-4 md:px-8",
-        isScrolled ? "top-4" : "top-8",
-        "transition-all duration-300 ease-in-out",
-      )}
-    >
-      <div
-        className={cn(
-          "flex items-center justify-between gap-2 mx-auto max-w-screen-xl", // Changed to justify-between for spacing
-          "bg-white/10 backdrop-blur-lg",
-          isScrolled ? "rounded-lg py-1 shadow-md" : "rounded-full py-2 shadow-xl",
-          "border border-white/20",
-          "transition-all duration-300 ease-in-out",
-        )}
-      >
-        {/* Desktop Navigation Links */}
-        <div className="hidden lg:flex items-center gap-2">
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild className="lg:hidden">
+        <Button variant="ghost" size="icon" className="text-gray-200 hover:text-white">
+          <Menu className="h-6 w-6" />
+          <span className="sr-only">Open mobile menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="w-full sm:max-w-xs bg-neutral-950 border-l border-white/10 text-white">
+        <SheetHeader className="text-left">
+          <SheetTitle className="text-white">Navigation</SheetTitle>
+        </SheetHeader>
+        <nav className="flex flex-col gap-4 py-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               className={cn(
-                "relative px-4 py-2 rounded-full text-sm font-medium",
-                "text-gray-200 hover:text-white",
-                "transition-colors duration-200",
-                // Highlight based on scroll spy or initial path
-                (activeSection === link.href.split("#")[1] ||
-                  (link.href === "/#home" && activeSection === null && pathname === "/")) &&
-                  "bg-white/20 text-white",
+                "text-lg font-medium text-gray-200 hover:text-white transition-colors",
+                activeSection === link.href.split("#")[1] && "text-purple-400", // Highlight active section
               )}
+              onClick={() => setIsOpen(false)} // Close sheet on link click
             >
               {link.name}
             </Link>
           ))}
-        </div>
 
-        {/* Init Dropdown for Login and Signup (Desktop) */}
-        <div className="hidden lg:block">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="relative px-4 py-2 rounded-full text-sm font-medium text-gray-200 hover:text-white transition-colors duration-200"
+                className="justify-start text-lg font-medium text-gray-200 hover:text-white transition-colors"
               >
                 Init
               </Button>
@@ -105,22 +73,22 @@ export function FloatingNavbar() {
                 <h3 className="text-lg font-semibold text-white">Login</h3>
                 <form className="space-y-3">
                   <div>
-                    <Label htmlFor="login-email" className="text-gray-300">
+                    <Label htmlFor="mobile-login-email" className="text-gray-300">
                       Email
                     </Label>
                     <Input
-                      id="login-email"
+                      id="mobile-login-email"
                       type="email"
                       placeholder="email@example.com"
                       className="mt-1 bg-neutral-800 border-gray-700 text-white"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="login-password" className="text-gray-300">
+                    <Label htmlFor="mobile-login-password" className="text-gray-300">
                       Password
                     </Label>
                     <Input
-                      id="login-password"
+                      id="mobile-login-password"
                       type="password"
                       placeholder="********"
                       className="mt-1 bg-neutral-800 border-gray-700 text-white"
@@ -137,11 +105,11 @@ export function FloatingNavbar() {
                 <h3 className="text-lg font-semibold text-white">Sign Up</h3>
                 <form action={signupAction} className="space-y-3">
                   <div>
-                    <Label htmlFor="signup-email" className="text-gray-300">
+                    <Label htmlFor="mobile-signup-email" className="text-gray-300">
                       Email
                     </Label>
                     <Input
-                      id="signup-email"
+                      id="mobile-signup-email"
                       name="email" // Add name attribute for FormData
                       type="email"
                       placeholder="email@example.com"
@@ -150,11 +118,11 @@ export function FloatingNavbar() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="signup-password" className="text-gray-300">
+                    <Label htmlFor="mobile-signup-password" className="text-gray-300">
                       Password
                     </Label>
                     <Input
-                      id="signup-password"
+                      id="mobile-signup-password"
                       name="password" // Add name attribute for FormData
                       type="password"
                       placeholder="********"
@@ -183,15 +151,8 @@ export function FloatingNavbar() {
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-
-        {/* Mobile Menu Trigger */}
-        <div className="lg:hidden flex-grow justify-end flex">
-          {" "}
-          {/* Pushes hamburger to the right on mobile */}
-          <MobileNavSheet navLinks={navLinks} activeSection={activeSection} />
-        </div>
-      </div>
-    </nav>
+        </nav>
+      </SheetContent>
+    </Sheet>
   )
 }

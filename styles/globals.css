@@ -1,5 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+/* This file is no longer used. Content moved to app/globals.css */
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
